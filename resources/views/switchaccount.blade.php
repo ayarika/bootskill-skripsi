@@ -479,7 +479,7 @@
         <h2>Welcome Back!</h2>
     @endif
 
-    <form method="POST" action="{{ route('changeaccount.login') }}">
+    <form method="POST" action="{{ route('switchaccount.login') }}">
         @csrf
 
         <h2 style="color: #2e3a59 !important;">Sign In</h2>
