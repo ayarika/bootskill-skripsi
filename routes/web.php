@@ -234,7 +234,6 @@ Route::middleware('auth')->group(function () {
         // Event Management
         Route::get('/your-event', [OrganizerController::class, 'yourEvent'])->name('organizer.yourevent');
         Route::get('/create-event', [OrganizerController::class, 'create'])->name('organizer.createevent');
-        Route::post('/organizer/event', [OrganizerController::class, 'store'])->name('organizer.event.store');
 
         Route::post('/events/store', [OrganizerController::class, 'store'])->name('organizer.event.store');
         Route::delete('/event/{id}/delete', [OrganizerController::class, 'deleteEvent'])->name('organizer.deleteevent');
