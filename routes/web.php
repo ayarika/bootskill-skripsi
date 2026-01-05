@@ -63,7 +63,6 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/resetpass', fn() => view('forgotpasslan'))->name('forgotpasslan');
 Route::post('/resetpass', [LoginController::class, 'resetpass'])->name('newpass');
 
-Route::get('/bootcamp/event/{id}', [BootcampController::class, 'show'])->name('bootcamp.detail');
 // Event public detail
 Route::get('/event/{id}', [OrganizerController::class, 'showPublicEvent'])->name('event.public.show');
 
