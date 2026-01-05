@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* RESPONSIVE TWEAKS */
+
+@media (max-width: 768px) {
+    main {
+        margin-left: 0;
+        padding-left: 20px;
+    }
+    .topbarmain {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .searchbar {
+        width: 100%;
+        justify-content: center;
+    }
+    .usersection {
+        justify-content: flex-end;
+    }
+    .filterbuttons {
+        justify-content: center;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    .bootcamp-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+    #searchInput {
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filterbuttons {
+        gap: 6px;
+    }
+    .bootcamp-card {
+        margin-left: 0;
+    }
+    .sidebar {
+        width: 160px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #notifDropdown {
+        width: 90vw;
+        left: 5vw !important;
+        right: auto !important;
+        top: 45px;
+    }
+}
+
+
+/* Bootcamp card styles */
+
+@media (max-width: 1024px) {
+    .bootcamp-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .bootcamp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.hidden {
+        transform: translateX(-100%);
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    .bootcamp-container {
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar:not(.hidden) {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0 !important;
+        /* Force no margin on mobile */
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 30px 20px;
+    }
+}

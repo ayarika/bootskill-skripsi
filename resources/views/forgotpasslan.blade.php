@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang= "en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Forgot Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        nav {
+            background: linear-gradient(to bottom, #66aef6ff, #79beedff);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18.8px 30px;
+            flex-wrap: wrap;
+        }
+
+        nav h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 60px 80px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 900px;
+            margin: 60px auto;
+        }
+
+        .auth-left {
+            flex: 1;
+            max-width: 580px;
+            color: #2e3a59;
+        }
+
+        .auth-left h2 {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .auth-left p {
+            font-size: 15px;
+            color: #333;
+        }
+
+        .auth-right {
+            flex: 1;
+            max-width: 450px;
+            margin-top: 10px;
+        }
+
+        .auth-right h3 {
+            margin-bottom: 20px;
+            color: #2e3a59;
+            text-align: center;
+            font-size: 22px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        form input:focus {
+            outline: none;
+            border-color: #1f6fba;
+            box-shadow: 0 0 5px rgba(31, 111, 186, 0.4);
+        }
+
+        .btn-home {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 0;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #0c6ad8;
+        }
+
+        .auth-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: #2e3a59;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 10px;
+                gap: 30px;
+            }
+
+
+            .auth-left, .auth-right {
+                max-width: 100%;
+                width: 100%;
+                text-align: center;
+            }
+
+            .auth-left h2 {
+                font-size: 26px;
+            }
+
+            .auth-left p {
+                font-size: 14px;
+                color: #444;
+                margin-bottom: 2px;
+            }
+
+            .auth-right {
+                margin-top: 0;
+                width: 100%;
+                align-items: center;
+            }
+
+            .auth-right h3 {
+                font-size: 20px;
+                margin-top: 10px;
+                margin-bottom: 16px;
+            }
+
+            form {
+                width: 100%;
+                max-width: 1000px;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            form input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .btn-home {
+                font-size: 15px;
+                padding: 10px;
+            }
+
+            .auth-footer {
+                margin-left: 10px;
+                gap: 4px;
+                font-size: 14px;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav>
+        <h1>Boot Skill</h1>
+        <div style="margin-left: auto; display: flex; gap: 10px;">
+            <a href="/landinghome"><p>Home</p></a>
+            <a href="/aboutlan"><p>About</p></a>
+            <a href="/partnershiplan"><p>Partnership</p></a>
+            <a href="/signinlan"><p>Sign in</p></a>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+        <div class="auth-wrapper">
+            <section class="auth-left">
+                @php
+                    $sentence1= "Challenge and Develop Yourself Through Bootcamp";
+                    $words = explode(" ", $sentence1);
+                    $cuts = 3;
+                    $firsts = implode(" ", array_slice($words, 0, $cuts));
+                    $lasts = implode(" ", array_slice($words, $cuts));
+                @endphp
+                <h2 style="text-align: center; margin-top: 60px; font-size: 30px;">{!! $firsts !!}<br>{!! $lasts !!}</h2>
+                @php
+                    $sentence= "Dicover diverse training programs from all of our provider to boot your skills and career";
+                    $word = explode(" " , $sentence);
+                    $cut= 9;
+                    $first = implode(" ", array_slice($word, 0, $cut));
+                    $last = implode(" ", array_slice($word, $cut));
+                @endphp
+                <p>{!! $first !!}<br>{!! $last !!}</p>
+            </section>
+            <section class="auth-right">
+                <h3>Change Password</h3>
+                <form action="{{ route('newpass') }}" method="POST">
+                    @csrf
+                    <input type="email" id="email" name="email" placeholder="Email" required />
+                    <input type="password" id="password" name="password" placeholder="New Password" required />
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password" required />
+
+                    <p id="js-error" style="color: red; font-size: 14px; margin-top: 5px; display: none;"></p>
+
+                    <button type="submit" class="btn-home">Submit</button>
+                </form>
+
+                @if(session('success'))
+                <p style="color: green;">{{ session('success')}}</p>
+                @endif
+
+                @if($errors->any())
+                    <ul style="color: red;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </section>
+        </div>
+    </main>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("change-password-form");
+            const jsError = document.getElementById("js-error");
+
+            form.addEventListener("submit", (e) => {
+                const password = document.getElementById("password").value;
+                const confirm = document.getElementById("password_confirmation").value;
+                let message = "";
+
+                if (password.length < 6) {
+                    message = "Password must be at least 6 characters long.";
+                } else if (password !== confirm) {
+                    message = "Password confirmation does not match.";
+                }
+
+                if (message) {
+                    e.preventDefault();
+                    jsError.textContent = message;
+                    jsError.style.display = "block";
+                } else {
+                    jsError.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
