@@ -55,7 +55,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 // Change Account
 Route::get('/changeaccount', [LoginController::class, 'showChangeAccountForm'])->name('changeaccount.form');
-Route::post('/changeaccount', [LoginController::class, 'changeAccount'])->name('changeaccount.login');
+Route::post('/switchaccount', [LoginController::class, 'changeAccount'])->name('switchaccount.login');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -201,7 +201,6 @@ Route::middleware('auth')->group(function () {
 
     // Switch Account
     Route::get('/switchaccount', [LoginController::class, 'showChangeAccountForm'])->name('switchaccount.form');
-    Route::post('/switchaccount', [LoginController::class, 'changeAccount'])->name('changeaccount.login');
     
     // Ganti Bahasa
     Route::get('/locale/{lang}', function ($lang) {
