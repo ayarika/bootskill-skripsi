@@ -1,1 +1,1 @@
-web: php-fpm
+web: docker-php-entrypoint php-fpm
