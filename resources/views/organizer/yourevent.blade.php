@@ -473,7 +473,11 @@
     <div class="grid-container">
       @forelse ($events as $event)
         <div class="event-card">
-            <img src="{{ $event->image_path ? asset('storage/' . $event->image_path) : asset('images/defaults.png') }}"
+            <img src="{{ 
+                  $event->image_path && file_exists(public_path($event->image_path))
+                      ? asset($event->image_path)
+                      : asset('images/defaults.png')
+                  }}"
               alt="Event Image" class="event-image">
             
             <div class="event-content">
