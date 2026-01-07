@@ -20,13 +20,21 @@ use App\Http\Controllers\{
 };
 
 Route::get('/check-storage', function () {
-    $path = storage_path('app/public/event_images');
+    try {
+        $path = storage_path('app/public/event_images');
 
-    return [
-        'exists' => file_existis($path),
-        'path' => $path,
-        'files' => is_dir($path) ? scandir($path) : 'not a directory',
-    ];
+        return [
+            'exists?' => file_exists($path),
+            'is_dir' => is_dir($path),
+            'realpath' => realpath($path),
+            'files' => is_dir($path) ? scandir($path) : [],
+        ];
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
 });
 
 /*
