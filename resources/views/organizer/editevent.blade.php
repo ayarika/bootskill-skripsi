@@ -1071,7 +1071,7 @@
 
                                     <div class="material-preview"
                                         data-link="{{ $material->video_link ?? '' }}"
-                                        data-file="{{ $material->file_path ?? '' }}">
+                                        data-file="{{ $material->file_path ? Storage::url($material->file_path) : ''}}">
                                         @if($material->type == 'pdf' && $material->file_path)
                                             <button type="button" class="fullscreen-btn" onclick="openFullscreen(this)">⛶</button>
                                             <iframe src="{{ Storage::url($material->file_path) }}" style="width:100%; height: 250px; border: none;"></iframe>
@@ -1529,20 +1529,27 @@
                 return;
             }
 
-            if (url.endsWith('.mp4')) {
-                const video = document.createElement('video');
+            function renderFilePreview(preview, type, fileUrl) {
+                preview.innerHTML = '';
+                if (!fileUrl) return;
 
-                video.src = url.startsWith('https')
-                    ? url
-                    : `{{ asset('storage') }}/${url}`;
-
-                video.controls = true;
-                video.style.width = '100%';
-                video.style.maxHeight = '250px';
-                video.style.borderRadius = '8px';
-
-                preview.appendChild(video);
-                return;
+                if (type === 'pdf') {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = fileUrl;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '250px';
+                    iframe.style.border = '1px solid #ccc';
+                    iframe.style.borderRadius = '8px';
+                    preview.appendChild(iframe);
+                } else if (type === 'video_file') {
+                    const video = document.createElement('video');
+                    video.src = fileUrl;
+                    video.controls = true;
+                    video.style.width = '100%';
+                    video.style.maxHeight = '250px';
+                    video.style.borderRadius = '8px';
+                    preview.appendChild(video);
+                }
             }
 
             preview.textContent = 'Preview not available';
@@ -1550,24 +1557,17 @@
 
         document.querySelectorAll('.material-item').forEach(item => {
             const typeSelect = item.querySelector('.material-type');
-            const linkInput = item.querySelector('.material-link');
             const preview = item.querySelector('.material-preview');
-            const fileWrap = item.querySelector('.file-input-wrapper');
+            const fileUrl = preview.dataset.file;
+            const videoLink = preview.dataset.link;
 
-            if (!typeSelect || typeSelect.value !== 'video_link') return;
-
-            if (fileWrap) fileWrap.style.display = 'none';
-            if (linkInput) linkInput.style.display = 'block';
-
-            const savedLink = preview?.dataset?.link?.trim();
-
-            console.log('INIT VIDEO LINK:', savedLink);
-
-            if (savedLink && linkInput && !linkInput.value) {
-                linkInput.value = savedLink;
+            if (typeSelect.value === 'video_link' && videoLink) {
+                const linkInput = item.querySelector('.material-link');
+                if (linkInput) linkInput.value = videoLink;
+                renderVideoLinkPreview(item);
+            } else if ((typeSelect.value === 'pdf' || typeSelect.value === 'video_file') && fileUrl) {
+                renderFilePreview(preview, typeSelect.value, fileUrl);
             }
-
-            renderVideoLinkPreview(item);
         });
 
         document.querySelectorAll('.material-item').forEach(item => {
