@@ -19,6 +19,12 @@ use App\Http\Controllers\{
     CertificateController,
 };
 
+
+Route::get('/fix-storage', function() {
+    Artisan::call('storage:link');
+    return 'Symlink fixed!';
+});
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES (No Auth)
