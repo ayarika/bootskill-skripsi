@@ -61,17 +61,19 @@ class ProfileController extends Controller {
         $user = Auth::user();
 
         if ($user->role === 'participant') {
-            $user->role= 'organizer_active';
+            $user->role = 'organizer_active';
+            $redirectRoute = 'organizer.home';
+            $successMsg = 'Switched to Organizer';
         } else {
             $user->role = 'participant';
+            $redirectRoute = 'aamainhome';
+            $successMsg = 'Switched to Participant';
         }
 
         $user->save();
         Auth::setUser($user->fresh());
-
-        return $user->role === 'organizer_active'
-            ? redirect()->route('organizer.home')->with('success', 'Switched to Organizer')
-            : redirect()->route('aamainhome')->with('success', 'Switched to Participant');
+        
+        return redirect()->route($redirectRoute)->with('success', $successMsg);
     }
 
     public function updateNotifications(Request $request): RedirectResponse {

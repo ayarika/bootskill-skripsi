@@ -1214,7 +1214,12 @@
                                     <p>{{ Auth::user()->email }}</p>
                                 </div>
                             </div>
-                            <hr />
+                            <hr/>
+
+                             @php 
+                                $currentRole = Auth::user()->role ?? 'participant';
+                                $nextRoleLabel = $currentRole === 'participant' ? 'Organizer' : 'Participant';
+                            @endphp
                             <div class="dropdown-links">
                                 <a href="{{ route('switchaccount.form') }}" class="switch-btn">Switch Account</a>
                                 
@@ -1223,12 +1228,6 @@
                                 @elseif (Auth::user()->role === 'organizer_active')
                                     <a href="{{ route('organizer.editprofile') }}">Settings</a>
                                 @endif
-                                
-                                @php 
-                                    $nextRoleLabel = Auth::user()->role === 'participant'
-                                        ? 'Organizer'
-                                        : 'Participant';
-                                @endphp
                                 
                                 <button class="switch-role-btn" id="openSwitchRolePopup">
                                     Switch to {{ $nextRoleLabel }}
