@@ -1195,19 +1195,17 @@
                     </div>
 
                     <div class="profileicon" id="profilebtn" style="position: relative;" tabindex="0" aria-label="User Profile">
-                            @if(Auth::user()->profile_picture_url)
-                                <img src="{{ Auth::user()->profile_picture_url }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
-                            @else
-                                <img src="{{ asset('images/default-profile.jpg') }}" alt="Default Picture" style="width: 40px; height: 40px;border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
-                            @endif
+                        @php
+                            $profileSrc = Auth::user()->profile_picture
+                                ? asset(Auth::user()->profile_picture)
+                                : asset('images/default-profile.jpg');
+                        @endphp
+                        
+                        <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
 
                         <div class="profile-dropdown" id="profileDropdown" role="menu">
                             <div class="profileinfo">
-                                @if(Auth::user()->profile_picture_url)
-                                    <img src="{{ Auth::user()->profile_picture_url }}" alt="Profile Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
-                                @else
-                                    <img src="{{ asset('images/default-profile.jpg') }}" alt="Default Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
-                                @endif
+                                <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
 
                                 <div class="profiledetails">
                                     <strong>{{ Auth::user()->name }}</strong>

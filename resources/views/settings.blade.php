@@ -543,10 +543,13 @@
 
         <div class="sidebar-menu" id="sidebar-menu">
             <div class="sidebar-profile">
+                @php
+                    $profileSrc = $user->profile_picture
+                        ? asset($user->profile_picture)
+                        : asset('images/default-profile.jpg');
+                @endphp
                 <img
-                    src="{{ auth()->user()->profile_picture
-                        ? asset('storage/' .auth()->user()->profile_picture)
-                        : asset('images/default-profile.jpg') }}"
+                    src="{{ $profileSrc }}"
                     alt="Profile Picture"
                     onerror="this.onerror=null;this.src='{{ asset('images/default-profile.jpg') }}';"
                 >
@@ -600,7 +603,7 @@
 
                             <img 
                                 id="previewImage"
-                                src="{{ $user->profile_picture ? asset($user->profile_picture) : asset('images/default-profile.jpg') }}"
+                                src="{{ $profileSrc }}"
                                 data-default="{{ asset('images/default-profile.jpg') }}"
                                 alt="Profile"
                                 onerror="this.onerror=null;this.src='{{ asset('images/default-profile.jpg') }}';"
