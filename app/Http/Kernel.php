@@ -8,6 +8,7 @@ class Kernel extends HttpKernel
 {
     protected $middleware = [
         // middleware global
+        \App\Http\Middleware\ForceHttps::class,
         \App\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,

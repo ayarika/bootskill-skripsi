@@ -1008,7 +1008,7 @@
                                         '{{ route('participant.paymentproof.show', $enrollment->id) }}',
                                         '{{ $enrollment->event->title }}'
                                     )">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 24 24">
+                                    <svg width="16" height="16" fill="white" viewBox="0 0 24 24">
                                         <path d="M21 8V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v1h18zm0 2H3v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9zm-9 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.5-4h-3v-2h3v2z"/>
                                     </svg>
                                     &nbsp;Bill

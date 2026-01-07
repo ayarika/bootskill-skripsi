@@ -1532,7 +1532,7 @@
             if (url.endsWith('.mp4')) {
                 const video = document.createElement('video');
 
-                video.src = url.startsWith('http')
+                video.src = url.startsWith('https')
                     ? url
                     : `{{ asset('storage') }}/${url}`;
 

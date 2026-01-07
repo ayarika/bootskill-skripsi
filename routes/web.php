@@ -46,6 +46,9 @@ Route::view('/helpandsupport', 'helpandsupport');
 
 // Register
 Route::view('/signuplan', 'signuplan');
+Route::get('/register', function() {
+    return redirect()->route('show.register');
+});
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 // Login

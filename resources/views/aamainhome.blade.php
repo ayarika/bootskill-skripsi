@@ -1159,7 +1159,7 @@
             <form action="{{ route('search.bootcamp') }}" method="GET" class="searchbar">
                 <input type="text" name="query" id="searchInput" placeholder="Search bootcamp..." aria-label="Search">
                 <button type="submit" aria-label="Submit search">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#333" style="opacity: 80%;" viewBox="0 0 16 16">
+                    <svg width="18" height="18" fill="#333" style="opacity: 80%;" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397h-.001l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.85-3.85zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
                     </svg>
                 </button>
@@ -1169,7 +1169,7 @@
                     <div class="notification-wrapper">
 
                         <div class="notification" id="notificationbtn" tabindex="0" aria-label="Notification">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="#333">
+                            <svg viewBox="0 0 448 512" width="24" height="24" fill="#333">
                                 <path d="M224 512c35.3 0 63.9-28.7 63.9-64h-127.8c0 35.3 28.6 64 63.9 64zm215.4-149.7c-19.4-20.9-55.5-52.7-55.5-154.3 0-77.7-54.5-139.4-127.7-155.2V32c0-17.7-14.3-32-31.9-32s-31.9 14.3-31.9 32v20.9c-73.2 15.8-127.7 77.5-127.7 155.2 0 101.6-36.1 133.4-55.5 154.3-6 6.4-8.7 14.5-8.7 22.6 0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48 0-8.1-2.7-16.2-8.7-22.6z"/>
                             </svg>
 
