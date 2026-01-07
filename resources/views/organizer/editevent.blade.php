@@ -870,13 +870,13 @@
             <div class="form-group">
                 <label for="start_date" class="title-p">Start Date</label>
                 <input type="datetime-local" id="start_date" name="start_date"
-                    value="{{ old('start_date', \Carbon\Carbon::parse($event->start_date)->format('Y-m-d\TH:i')) }}" required>
+                    value="{{ $startDateValue }}" required>
             </div>
 
             <div class="form-group">
                 <label for="end_date" class="title-p">End Date</label>
                 <input type="datetime-local" id="end_date" name="end_date"
-                    value="{{ old('end_date', \Carbon\Carbon::parse($event->end_date)->format('Y-m-d\TH:i')) }}" required>
+                    value="{{ $endDateValue }}" required>
                 <small id="date-error" style="color:red; display:none;">End date cannot be earlier than start date.</small>
             </div>
 

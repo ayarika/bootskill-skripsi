@@ -293,8 +293,8 @@ class OrganizerController extends Controller
             ->sort()
             ->values();
 
-        $startDateValue = old('start_date', $event->start_date);
-        $endDateValue = old('end_date', $event->end_date);
+        $startDateValue = old('start_date', \Carbon\Carbon::parse($event->start_date)->format('Y-m-d\TH:i'));
+        $endDateValue = old('end_date', \Carbon\Carbon::parse($event->end_date)->format('Y-m-d\TH:i'));
 
         return view('organizer.editevent', compact('event', 'materials', 'topics', 'categories', 'startDateValue', 'endDateValue'));
     }
