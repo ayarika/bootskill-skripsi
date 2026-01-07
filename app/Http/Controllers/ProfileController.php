@@ -29,26 +29,33 @@ class ProfileController extends Controller {
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only(['name', 'email']);
+        $user->name = $request->name;
+        $user->email = $request->email;
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
 
         if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
 
-            if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
-                Storage::disk('public')->delete($user->profile_picture);
+            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
+                @unlink(public_path($user->profile_picture));
             }
 
-            $user->profile_picture = $request
-                ->file('profile_picture')
-                ->store('profile_pictures', 'public');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            if (!is_dir($uploadFolder)) {
+                mkdir($uploadFolder, 0755, true);
+            }
+
+            $file->move($uploadFolder, $fileName);
+            $user->profile_picture = 'profile_pictures/' . $fileName;
         }
 
-        if ($user->email !== $data['email']) {
-            $data['email_verified_at'] = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
+        
 
         $user->update($data);
 
@@ -76,7 +83,7 @@ class ProfileController extends Controller {
 
         $user->save();
         Auth::setUser($user->fresh());
-        
+
         return redirect()->route($redirectRoute)->with('success', $successMsg);
     }
 

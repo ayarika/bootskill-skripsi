@@ -586,7 +586,7 @@
                         </div>
                     @endif
 
-                   <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -600,9 +600,7 @@
 
                             <img 
                                 id="previewImage"
-                                src="{{ auth()->user()->profile_picture
-                                    ? asset('storage/' .auth()->user()->profile_picture)
-                                    : asset('images/default-profile.jpg') }}"
+                                src="{{ $user->profile_picture ? asset($user->profile_picture) : asset('images/default-profile.jpg') }}"
                                 data-default="{{ asset('images/default-profile.jpg') }}"
                                 alt="Profile"
                                 onerror="this.onerror=null;this.src='{{ asset('images/default-profile.jpg') }}';"
@@ -687,7 +685,6 @@
                 const tabLinks = document.querySelectorAll(".settings-tab");
                 const tabContents = document.querySelectorAll(".tab-content");
 
-                // Cek apakah ada tab aktif yang disimpan di localStorage
                 const savedTab = localStorage.getItem("activeTab");
                 if (savedTab) {
                     tabContents.forEach(content => {
@@ -701,7 +698,6 @@
                         targetContent.classList.add("active");
                     }
 
-                    // Aktifkan tab link sesuai savedTab
                     tabLinks.forEach(link => {
                         if (link.getAttribute("data-tab") === savedTab) {
                             link.classList.add("active");
@@ -711,7 +707,6 @@
                     });
                 }
 
-                        // Saat klik tab
                         tabLinks.forEach(link => {
                             link.addEventListener("click", function (e) {
                                 e.preventDefault();
