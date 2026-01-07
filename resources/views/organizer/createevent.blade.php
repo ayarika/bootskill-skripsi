@@ -506,7 +506,7 @@
                         *Image format: jpeg, png, jpg - <strong>Max size 2MB</strong>
                     </small>
                     <img id="image-preview"
-                        src="{{ isset($event) && $event->event_path ? asset('storage/' . $event->image_path) : asset('images/defaults.png') }}"
+                        src="{{ isset($event) && $event->image_path ? asset('storage/' . $event->image_path) : asset('images/defaults.png') }}"
                             alt="Preview">
                     <input type="file" id="event_image" name="event_image" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
                 </div>

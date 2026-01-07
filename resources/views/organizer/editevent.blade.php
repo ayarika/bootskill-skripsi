@@ -849,7 +849,7 @@
                     *Image format: jpeg, png, jpg - <strong>Max size 2MB</strong>
                 </small>
                 <img id="image-preview"
-                    src="{{ $event->image_path ? asset('storage/' . $event->image_path) : asset('images/defaults.png') }}"
+                    src="{{ $event->image_path ? asset($event->image_path) : asset('images/defaults.png') }}"
                     alt="Preview">
                 <input type="file" id="event_image" name="event_image" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
             </div>
@@ -934,7 +934,7 @@
                 <label for="topic" class="title-p">Topic</label>
                 <div class="select-container">
                     <input type="text" name="topic" id="topic"
-                        value=" {{ old('topic', ucwords($event->topic)) }}"
+                        value="{{ old('topic', ucwords($event->topic)) }}"
                         placeholder="Select or type a topic" required autocomplete="off" class="custom-select">
                     <div id="topic-list" class="dropdown-list">
                         @foreach($topics as $topic)
@@ -1071,14 +1071,14 @@
 
                                     <div class="material-preview"
                                         data-link="{{ $material->video_link ?? '' }}"
-                                        data-file="{{ $material->file_path ? Storage::url($material->file_path) : ''}}">
+                                        data-file="{{ $material->file_path ? asset($material->file_path) : ''}}">
                                         @if($material->type == 'pdf' && $material->file_path)
                                             <button type="button" class="fullscreen-btn" onclick="openFullscreen(this)">⛶</button>
-                                            <iframe src="{{ Storage::url($material->file_path) }}" style="width:100%; height: 250px; border: none;"></iframe>
+                                            <iframe src="{{ asset($material->file_path) }}" style="width:100%; height: 250px; border: none;"></iframe>
                                         @elseif($material->type == 'video_file' && $material->file_path)
                                             <button type="button" class="fullscreen-btn" onclick="openFullscreen(this)">⛶</button>
                                             <video controls style="width: 100%; max-height: 250px;">
-                                                <source src="{{ Storage::url($material->file_path) }}" type="video/mp4">
+                                                <source src="{{ asset($material->file_path) }}" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
                                         @elseif($material->type == 'video_link')
@@ -1578,19 +1578,15 @@
 
             if (!typeSelect || typeSelect.value !== 'video_link') return;
 
-            // 1. UI state
             if (fileWrap) fileWrap.style.display = 'none';
             if (linkInput) linkInput.style.display = 'block';
 
-            // 2. Ambil link dari dataset
             const savedLink = preview?.dataset?.link?.trim();
 
-            // 3. Inject ke input
             if (savedLink && linkInput && !linkInput.value) {
                 linkInput.value = savedLink;
             }
 
-            // 4. Render preview SETELAH input terisi
             renderVideoLinkPreview(item);
         });
 
