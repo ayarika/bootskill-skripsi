@@ -929,9 +929,7 @@
                     <div class="bootcamp-content">
                         <h3>{{ $event->title }}</h3>
                         <div class="bootcamp-info organizer-info" style="margin-bottom: 15px">
-                                <img src="{{ $event->organizer->profile_picture 
-                                    ? asset('storage/' . $event->organizer->profile_picture) 
-                                    : asset('images/default-profile.jpg') }}">
+                                <img src="{{ $event->organizer->profile_picture_url }}">
                             <span> {{ $event->organizer->name ?? '-' }}</span>
                         </div>
 
