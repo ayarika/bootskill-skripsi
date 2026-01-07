@@ -1508,7 +1508,7 @@
             if (!typeSelect || !linkInput || !preview) return;
             if (typeSelect.value !== 'video_link') return;
 
-            let url = (linkInput?.value || '').trim();
+            let url = (linkInput.value || preview.dataset.link || '').trim();
             preview.innerHTML = '';
 
             if (!url) {
@@ -1528,37 +1528,41 @@
                 return;
             }
 
-            function renderFilePreview(preview, type, fileUrl) {
-                preview.innerHTML = '';
-                if (!fileUrl) return;
-
-                if (type === 'pdf') {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = fileUrl;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '250px';
-                    iframe.style.border = '1px solid #ccc';
-                    iframe.style.borderRadius = '8px';
-                    preview.appendChild(iframe);
-                } else if (type === 'video_file') {
-                    const video = document.createElement('video');
-                    video.src = fileUrl;
-                    video.controls = true;
-                    video.style.width = '100%';
-                    video.style.maxHeight = '250px';
-                    video.style.borderRadius = '8px';
-                    preview.appendChild(video);
-                }
-            }
-
             preview.textContent = 'Preview not available';
         }
+
+        function renderFilePreview(preview, type, fileUrl) {
+            if (!preview || !fileUrl) return;
+
+            preview.innerHTML = '';
+
+            if (type === 'pdf') {
+                const iframe = document.createElement('iframe');
+                iframe.src = fileUrl;
+                iframe.style.width = '100%';
+                iframe.style.height = '250px';
+                iframe.style.border = '1px solid #ccc';
+                 iframe.style.borderRadius = '8px';
+                preview.appendChild(iframe);
+            } else if (type === 'video_file') {
+                const video = document.createElement('video');
+                video.src = fileUrl;
+                video.controls = true;
+                video.style.width = '100%';
+                video.style.maxHeight = '250px';
+                video.style.borderRadius = '8px';
+                preview.appendChild(video);
+            }
+        }
+
 
         document.querySelectorAll('.material-item').forEach(item => {
             const typeSelect = item.querySelector('.material-type');
             const preview = item.querySelector('.material-preview');
             const fileUrl = preview.dataset.file;
             const videoLink = preview.dataset.link;
+
+            if (!typeSelect || !preview) return;
 
             if (typeSelect.value === 'video_link' && videoLink) {
                 const linkInput = item.querySelector('.material-link');
