@@ -1196,9 +1196,12 @@
 
                     <div class="profileicon" id="profilebtn" style="position: relative;" tabindex="0" aria-label="User Profile">
                         @php
-                            $profileSrc = Auth::user()->profile_picture
-                                ? asset(Auth::user()->profile_picture)
+                            $profileSrc = $user && $user->profile_picture
+                                ? asset($user->profile_picture)
                                 : asset('images/default-profile.jpg');
+
+                            $currentRole = $user ? strtolower($user->role) : 'participant';
+                            $nextRoleLabel = $currentRole === 'participant' > 'Organizer' : 'Participant';
                         @endphp
                         
                         <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
@@ -1208,22 +1211,18 @@
                                 <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
 
                                 <div class="profiledetails">
-                                    <strong>{{ Auth::user()->name }}</strong>
-                                    <p>{{ Auth::user()->email }}</p>
+                                    <strong>{{ $user?->name ?? 'Guest'}}</strong>
+                                    <p>{{ $user->email ?? '-'}}</p>
                                 </div>
                             </div>
                             <hr/>
 
-                            @php 
-                                $currentRole = strtolower(Auth::user()->role ?? 'participant');
-                                $nextRoleLabel = $currentRole === 'participant' ? 'Organizer' : 'Participant';
-                            @endphp
                             <div class="dropdown-links">
                                 <a href="{{ route('switchaccount.form') }}" class="switch-btn">Switch Account</a>
                                 
-                                @if(Auth::user()->role === 'participant')
+                                @if($currentRole === 'participant')
                                     <a href="{{ route('settings') }}" class="settings-btn">Settings</a>
-                                @elseif (Auth::user()->role === 'organizer_active')
+                                @elseif ($currentRole === 'organizer_active')
                                     <a href="{{ route('organizer.editprofile') }}">Settings</a>
                                 @endif
                                 
