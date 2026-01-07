@@ -53,8 +53,8 @@ class OrganizerController extends Controller
             ->values();
         
         $event = null;
-        $startDateValue = old('start_date', '');
-        $endDateValue = old('end_date', '');
+        $startDateValue = old('start_date', now()->format('Y-m-d\TH:i'));
+        $endDateValue = old('end_date', now()->addHour()->format('Y-m-d\TH:i'));
 
         return view('organizer.createevent', compact('topics', 'categories', 'event', 'startDateValue', 'endDateValue'));
     }
