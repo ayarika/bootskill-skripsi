@@ -1196,8 +1196,8 @@
 
                     <div class="profileicon" id="profilebtn" style="position: relative;" tabindex="0" aria-label="User Profile">
                         @php
-                            $profileSrc = Auth::user()->profile_picture
-                                ? asset(Auth::user()->profile_picture)
+                            $profileSrc = $user->profile_picture
+                                ? asset($user->profile_picture)
                                 : asset('images/default-profile.jpg');
                         @endphp
                         
