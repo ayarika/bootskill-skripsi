@@ -21,6 +21,8 @@ use App\Http\Controllers\{
 
 
 Route::get('/fix-storage', function() {
+
+    if (!app()->environment('local')) abort(403);
     Artisan::call('storage:link');
     return 'Symlink fixed!';
 });
