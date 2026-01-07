@@ -60,7 +60,11 @@ class ProfileController extends Controller {
     public function switchRole(Request $request): RedirectResponse {
         $user = Auth::user();
 
-        if ($user->role === 'participant') {
+        if (!$user) {
+            return redirect()->route('aamainhome')->with('error', 'User not found');
+        }
+
+        if (strtolower($user->role) === 'participant') {
             $user->role = 'organizer_active';
             $redirectRoute = 'organizer.home';
             $successMsg = 'Switched to Organizer';
@@ -71,7 +75,6 @@ class ProfileController extends Controller {
         }
 
         $user->save();
-        Auth::setUser($user->fresh());
         
         return redirect()->route($redirectRoute)->with('success', $successMsg);
     }
