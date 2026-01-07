@@ -498,13 +498,27 @@
                     <h4>{{ $material->title }}</h4>
                     
                     @if($material->type === 'pdf')
-                        <iframe src="{{ url('storage/' . $material->file_path) }}"
-                            width="100%" height="400"></iframe>
+                        @php
+                            $pdfPath = public_path('storage/' . $material->file_path);
+                        @endphp
+                        @if($material->file_path && file_exists($pdfPath))
+                            <iframe src=" asset('storage/' . $material->file_path) }}"
+                                width="100%" height="400"></iframe>
+                        @else
+                            <p style="color:red;">PDF file not found.</p>
+                        @endif
                     @elseif($material->type === 'video_file')
-                        <video controls width="100%">
-                            <source src="{{ asset('storage/' . $material->file_path) }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        @php
+                            $videoPath = public_path('storage/' . $material->file_path);
+                        @endphp
+                        @if($material->file_path && file_exists($videoPath))
+                            <video controls width="100%" style="max-height:500px;">
+                                <source src="{{ asset('storage/' . $material->file_path) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        @else
+                            <p style="color:red;">Video file not found.</p>
+                        @endif
                     @elseif($material->type === 'video_link')
                         <div class="video-wrapper">
                             <iframe
