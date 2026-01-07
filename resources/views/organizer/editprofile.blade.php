@@ -743,8 +743,8 @@
                         <label for="photo" class="prof-op">Profile Picture</label>
 
                         <img id="previewImage"
-                            src="{{ $user->profile_picture
-                                ? asset('storage/' . $user->profile_picture)
+                            src="{{ $user->profile_picture && file_exists(public_path($user->profile_picture))
+                                ? asset('$user->profile_picture)
                                 : asset('images/default-profile.jpg') }}"
                             alt="Profile Picture"
                             class="organizer-profile-img"
