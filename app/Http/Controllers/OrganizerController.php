@@ -108,8 +108,8 @@ class OrganizerController extends Controller
         ]);
         
         if ($request->remove_photo == "1") {
-            if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
-                Storage::disk('public')->delete($user->profile_picture);
+            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
+                unlink(public_path($user->profile_picture));
             }
             $user->profile_picture = null;
         }
@@ -209,10 +209,18 @@ class OrganizerController extends Controller
         }
 
         if ($request->hasFile('event_image')) {
-            $validated['image_path'] = $request->file('event_image')->store('event_images', 'public');
+            $validated['image_path'] = $this->uploadToPublic($request->file('event_image'), 'event_images');
         }
 
         $validated['organizer_id'] = Auth::id();
+
+        if(!empty($validated['topic'])) {
+            $validated['topic'] = ucwords(strtolower(trim($validated['topic'])));
+        }
+
+        if (!empty($validated['category'])) {
+            $validated['category'] = ucwords(strtolower(trim($validated['category'])));
+        }
 
         $event = Event::create($validated);
 
@@ -232,13 +240,6 @@ class OrganizerController extends Controller
             }
         }
 
-        if (!empty($validated['topic'])) {
-            $validated['topic'] = ucwords(strtolower(trim($validated['topic'])));
-        }
-        if (!empty($validated['category'])) {
-            $validated['category'] = ucwords(strtolower(trim($validated['category'])));
-        }
-
         if ($request->has('materials')) {
             foreach ($request->materials as $materialData) {
                 if (empty($materialData['title'])) {
@@ -256,7 +257,7 @@ class OrganizerController extends Controller
                     isset($materialData['file']) &&
                     $materialData['file'] instanceof \Illuminate\Http\UploadedFile
                  ) {
-                    $filePath = $materialData['file']->store('materials', 'public');
+                    $filePath = $this->uploadToPublic($materialData['file'], 'materials');
                 }
 
                 \App\Models\Material::create([
@@ -306,13 +307,13 @@ class OrganizerController extends Controller
             abort(403);
         }
 
-        if ($event->image_path && Storage::disk('public')->exists($event->image_path)) {
-            Storage::disk('public')->delete($event->image_path);
+        if ($event->image_path && file_exists(public_path($event->image_path))) {
+            unlink(public_path($event->image_path));
         }
 
         foreach ($event->materials as $material) {
-            if ($material->file_path && Storage::disk('public')->exists($material->file_path)) {
-                Storage::disk('public')->delete($material->file_path);
+            if ($material->file_path && file_exists(public_path($material->file_path))) {
+                unlink(public_path($material->file_path));
             }
             $material->delete();
         }
@@ -341,7 +342,7 @@ class OrganizerController extends Controller
             'price' => 'nullable|numeric|min:0',
             'evaluation_event_url' => 'nullable|url',
             'meeting_link' => 'nullable|url',
-            'event_image' => 'nullable|image|max: 2048',
+            'event_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published',
             'topic' => 'nullable|string|max:100',
             'category' => 'nullable|string|max:100',
@@ -394,8 +395,7 @@ class OrganizerController extends Controller
         $event->is_full = $request->has('is_full');
 
         if($request->hasFile('event_image')) {
-            $path = $request->file('event_image')->store('event_images', 'public');
-            $event->image_path = $path;
+            $event->image_path = $this->uploadToPublic($request->file('event_image'), 'event_images');
         }
 
         $oldStatus = $event->status;
@@ -438,8 +438,8 @@ class OrganizerController extends Controller
                     ->first();
                 
                 if ($material) {
-                    if ($material->file_path && Storage::disk('public')->exists($material->file_path)) {
-                        Storage::disk('public')->delete($material->file_path);
+                    if ($material->file_path && file_exists(public_path($material->file_path))) {
+                        unlink(public_path($material->file_path));
                     }
                     $material->delete();
                 }
@@ -472,8 +472,8 @@ class OrganizerController extends Controller
                                 $videoLink = $materialData['video_link'];
                             }
 
-                            if ($material->file_path && Storage::disk('public')->exists($material->file_path)) {
-                                Storage::disk('public')->delete($material->file_path);
+                            if ($material->file_path && file_exists(public_path($material->file_path))) {
+                                unlink(public_path($material->file_path));
                             }
                         }
 
@@ -482,11 +482,11 @@ class OrganizerController extends Controller
                             isset($materialData['file']) &&
                             $materialData['file'] instanceof \Illuminate\Http\UploadedFile
                         ) {
-                            if ($material->file_path && Storage::disk('public')->exists($material->file_path)) {
-                                Storage::disk('public')->delete($material->file_path);
+                            if ($material->file_path && file_exists(public_path($material->file_path))) {
+                                unlink(public_path($material->file_path));
                             }
 
-                            $filePath = $materialData['file']->store('materials', 'public');
+                            $filePath = $this->uploadToPublic($materialData['file'], 'materials');
                         }
 
                         $material->update([
@@ -510,7 +510,7 @@ class OrganizerController extends Controller
                             isset($materialData['file']) &&
                             $materialData['file'] instanceof \Illuminate\Http\UploadedFile
                         ) {
-                            $filePath = $materialData['file']->store('materials', 'public');
+                            $filePath = $this->uploadToPublic($materialData['file'], 'materials');
                         }
 
                         \App\Models\Material::create([
@@ -625,15 +625,15 @@ class OrganizerController extends Controller
 
         $events = Event::where('organizer_id', $user->id)->get();
         foreach ($events as $event) {
-            if ($event->image_path && Storage::disk('public')->exists($event->image_path)) {
-                Storage::disk('public')->delete($event->image_path);
+            if ($event->image_path && file_exists(public_path($event->image_path))) {
+                unlink(public_path($event->image_path));
             }
 
             $event->delete();
         }
 
-        if ($user->profile_image && Storage::exists('public/' . $user->profile_image)) {
-            Storage::delete('public/' . $user->profile_image);
+        if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
+            unlink(public_path($user->profile_picture));
         }
 
         Auth::logout();
@@ -643,4 +643,9 @@ class OrganizerController extends Controller
         return redirect('/')->with('success', 'Your account has been deleted successfully.');
     }
 
+    private function uploadToPublic($file, $folder) {
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path($folder), $fileName);
+        return $folder . '/' . $fileName;
+    }
 }
