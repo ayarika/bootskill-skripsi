@@ -19,12 +19,14 @@ use App\Http\Controllers\{
     CertificateController,
 };
 
+Route::get('/check-storage', function () {
+    $path = storage_path('app/public/event_images');
 
-Route::get('/fix-storage', function() {
-
-    if (!app()->environment('local')) abort(403);
-    Artisan::call('storage:link');
-    return 'Symlink fixed!';
+    return [
+        'exists' => file_existis($path),
+        'path' => $path,
+        'files' => is_dir($path) ? scandir($path) : 'not a directory',
+    ];
 });
 
 /*
