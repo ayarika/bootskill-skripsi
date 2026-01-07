@@ -743,7 +743,7 @@
                         <label for="photo" class="prof-op">Profile Picture</label>
 
                         <img id="previewImage"
-                            src="{{ $user->profile_picture }}"
+                            src="{{ $user->profile_picture_url }}"
                             alt="Profile Picture"
                             class="organizer-profile-img"
                             onerror="this.onerror=null;this.src='{{ asset('images/default-profile.jpg') }}';"

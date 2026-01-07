@@ -125,6 +125,11 @@ class OrganizerController extends Controller
             }
 
             $file = $request->file('profile_picture');
+            $uploadFolder = public_path('profile_pictures');
+            if (!is_dir($uploadFolder)) {
+                mkdir($uploadFolder, 0755, true);
+            }
+            
             $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move($uploadFolder, $fileName);
 
