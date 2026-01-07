@@ -1217,8 +1217,8 @@
                             <hr/>
 
                             @php 
-                                $role = strtolower(Auth::user()->role);
-                                $nextRoleLabel = $role === 'participant' ? 'Organizer' : 'Participant';
+                                $currentRole = strtolower(Auth::user()->role ?? 'participant');
+                                $nextRoleLabel = $currentRole === 'participant' ? 'Organizer' : 'Participant';
                             @endphp
                             <div class="dropdown-links">
                                 <a href="{{ route('switchaccount.form') }}" class="switch-btn">Switch Account</a>

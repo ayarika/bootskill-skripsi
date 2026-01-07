@@ -75,6 +75,7 @@ class ProfileController extends Controller {
         }
 
         $user->save();
+        Auth::setUser($user->fresh());
         
         return redirect()->route($redirectRoute)->with('success', $successMsg);
     }
