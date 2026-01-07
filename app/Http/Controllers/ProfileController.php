@@ -29,12 +29,16 @@ class ProfileController extends Controller {
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
+
+        $user->update($data);
 
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
@@ -43,6 +47,7 @@ class ProfileController extends Controller {
                 @unlink(public_path($user->profile_picture));
             }
 
+            $uploadFolder = public_path('profile_pictures');
             $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
             if (!is_dir($uploadFolder)) {
                 mkdir($uploadFolder, 0755, true);
