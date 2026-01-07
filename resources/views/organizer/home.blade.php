@@ -437,7 +437,11 @@
         <div class="dropdown-event-card">
           <div class="event-left">
             <img
-              src="{{ $event->image_path ? asset($event->image_path) : asset('images/defaults.png') }}"
+              src="{{ 
+                    $event->image_path && file_exists(public_path($event->image_path))
+                      ? asset($event->image_path)
+                      : asset('images/defaults.png')
+                  }}"
               alt="Event Image"
               class="event-thumb"
             />
