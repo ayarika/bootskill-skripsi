@@ -116,24 +116,21 @@ class OrganizerController extends Controller
         }
 
         if ($request->hasFile('profile_picture')) {
-
-            if ($user->profile_picture) {
-                $oldPath = public_path($user->profile_picture);
-                if (file_exists($oldPath)) {
-                    @unlink($oldPath);
-                }
-            }
-
             $file = $request->file('profile_picture');
+
             $uploadFolder = public_path('profile_pictures');
             if (!is_dir($uploadFolder)) {
                 mkdir($uploadFolder, 0755, true);
             }
-            
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move($uploadFolder, $fileName);
 
-            $user->profile_picture = 'profile_pictures/' . $fileName;
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+            try {
+                $file->move($uploadFolder, $fileName);
+                $user->profile_picture = 'profile_pictures/' . $fileName;
+            } catch (\Exception $e) {
+                return back()->with('error', 'Failed to upload profile picture: ' . $e->getMessage());
+            }
         }
 
         $user->name = $request->name;
