@@ -597,10 +597,6 @@
 
                             <label>Change Profile Picture</label><br>
 
-                            @php
-                                $defaultImage = asset('images/default-profile.jpg');
-                            @endphp
-
                             <img 
                                 id="previewImage"
                                 src="{{ $profileSrc }}"
