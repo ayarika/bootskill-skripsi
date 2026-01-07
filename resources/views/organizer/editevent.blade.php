@@ -1508,8 +1508,7 @@
             if (!typeSelect || !linkInput || !preview) return;
             if (typeSelect.value !== 'video_link') return;
 
-            let url = (linkInput?.value || preview.dataset.link || '').trim();
-
+            let url = (linkInput?.value || '').trim();
             preview.innerHTML = '';
 
             if (!url) {
