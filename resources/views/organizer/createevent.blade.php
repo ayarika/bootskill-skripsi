@@ -547,13 +547,13 @@
                 </div>
                 <div class="switch-container">
                     <div class="switch-group">
-                    <input type="checkbox" id="evaluation_test_switch" onclick="toggleInput('evaluation_test')"
+                    <input type="checkbox" id="evaluation_test_switch" name="has_evaluation_test" onclick="toggleInput('evaluation_test')"
                         {{ old('evaluation_test_url', $event->evaluation_test_url ?? '') ? 'checked' : '' }}>
                         <label for="evaluation_test_switch" class="title-p">Evaluation Test</label>
                     </div>
                     <div class="switch-group">
-                        <input type="checkbox" id="group_switch" onclick="toggleInput('group')">
-                        <label for="group_switch" class="title-p">Group</label>
+                        <input type="checkbox" id="group_switch" name="has_group" onclick="toggleInput('group')">
+                        <label for="group_switch" name="has_paid" class="title-p">Group</label>
                     </div>
                     <div class="switch-group">
                         <input type="checkbox" id="paid_switch" onclick="toggleInput('paid')">
