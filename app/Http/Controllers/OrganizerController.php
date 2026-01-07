@@ -107,23 +107,28 @@ class OrganizerController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
         
-        if ($request->remove_photo == "1") {
-            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
-                unlink(public_path($user->profile_picture));
+        if ($request->remove_photo == "1" && $user->profile_picture) {
+            $oldPath = public_path($user->profile_picture);
+            if (file_exists($oldPath)) {
+                @unlink($oldPath);
             }
             $user->profile_picture = null;
         }
 
         if ($request->hasFile('profile_picture')) {
 
-            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
-                unlink(public_path($user->profile_picture));
+            if ($user->profile_picture) {
+                $oldPath = public_path($user->profile_picture);
+                if (file_exists($oldPath)) {
+                    @unlink($oldPath);
+                }
             }
 
-            $user->profile_picture = $this->uploadToPublic(
-                $request->file('profile_picture'),
-                'profile_pictures'
-            );
+            $file = $request->file('profile_picture');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move($uploadFolder, $fileName);
+
+            $user->profile_picture = 'profile_pictures/' . $fileName;
         }
 
         $user->name = $request->name;

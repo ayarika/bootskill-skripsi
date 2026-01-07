@@ -743,9 +743,7 @@
                         <label for="photo" class="prof-op">Profile Picture</label>
 
                         <img id="previewImage"
-                            src="{{ $user->profile_picture && file_exists(public_path($user->profile_picture))
-                                ? asset($user->profile_picture)
-                                : asset('images/default-profile.jpg') }}"
+                            src="{{ $user->profile_picture }}"
                             alt="Profile Picture"
                             class="organizer-profile-img"
                             onerror="this.onerror=null;this.src='{{ asset('images/default-profile.jpg') }}';"
