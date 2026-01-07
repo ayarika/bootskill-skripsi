@@ -342,7 +342,9 @@
                                 data-start-date="{{ $event->start_date}}">
                                 
                                 <div class="bootcamp-card-banner">
-                                    <img src="{{ $event->image_path ? asset('storage/'. $event->image_path) : asset('images/defaults.png') }}"
+                                    <img src="{{ $event->image_path && file_exists(public_path($event->image_path))
+                                            ? asset( $event->image_path) 
+                                            : asset('images/defaults.png') }}"
                                     alt="{{ $event->title }}"
                                     onerror="this.onerror=null;this.src='/images/defaults.png';">
 

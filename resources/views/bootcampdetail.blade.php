@@ -541,10 +541,9 @@
                 @else
                 <div class="bootcamp-container">
                     <div class="bootcamp-banner">
-                        <img src="{{   $event->image_path && file_exists(public_path('storage/' . $event->image_path))
-                                    ? asset('storage/' . $event->image_path)
-                                    : asset('images/defaults.png')
-                                }}"
+                        <img src="{{ $event->image_path && file_exists(public_path($event->image_path))
+                                ? asset( $event->image_path) 
+                                : asset('images/defaults.png') }}"
                             onerror="this.onerror=null; this.src='{{ asset('images/default-banner.jpg') }}';"
                             width="100%" height="auto" loading="lazy">
                     </div>

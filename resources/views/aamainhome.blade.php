@@ -1282,9 +1282,9 @@
                     
                     <div class="bootcamp-card-banner">
                         <img 
-                            src="{{ 
-                                $event->image_path
-                                    ? asset ('storage/' . ltrim($event->image_path, '/')) : asset('images/default.png') }}"
+                            src="{{ $event->image_path && file_exists(public_path($event->image_path))
+                                ? asset( $event->image_path) 
+                                : asset('images/defaults.png') }}"
                     
                             alt="{{ $event->title }}"
                             onerror="this.onerror=null;this.src='/images/defaults.png';">
