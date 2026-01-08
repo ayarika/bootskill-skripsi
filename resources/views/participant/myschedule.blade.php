@@ -1819,8 +1819,6 @@
 
                 scheduleList.innerHTML = "";
                 cards.forEach(c => scheduleList.appendChild(c));
-
-                originalCards = Array.from(scheduleList.querySelectorAll(".schedule-card"));
                 attachCardEvents();
             }
 
