@@ -1523,7 +1523,7 @@
                 const now = new Date();
                 if (!end) end = start;
                 if (now < start) return "upcoming";
-                if (now > end) return "ended";
+                if (now >= start && now <= end) return "ongoing";
                 return "completed";
             };
 
