@@ -1195,17 +1195,12 @@
                     </div>
 
                     <div class="profileicon" id="profilebtn" style="position: relative;" tabindex="0" aria-label="User Profile">
-                        @php
-                            $profileSrc = Auth::user()->profile_picture
-                                ? asset(Auth::user()->profile_picture)
-                                : asset('images/default-profile.jpg');
-                        @endphp
-                        
-                        <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
+                       
+                        <img src="{{ asset('images/default-profile.jpg') }}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; display: block;">
 
                         <div class="profile-dropdown" id="profileDropdown" role="menu">
                             <div class="profileinfo">
-                                <img src="{{ $profileSrc }}" alt="Profile Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                                <img src="{{ asset('images/default-profile.jpg') }}" alt="Profile Picture" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
 
                                 <div class="profiledetails">
                                     <strong>{{ Auth::user()->name }}</strong>
