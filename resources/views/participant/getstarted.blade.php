@@ -478,6 +478,8 @@
             @foreach($event->materials as $index => $material)
                 @php
                     $key = 'material-' . ($index + 1);
+                    $filePath = public_path(ltrim($material->file_path, '/'));
+                    $fileUrl = asset(ltrim($material->file_path, '/'));
                 @endphp
 
                 <div class="material-card material-content"
@@ -498,22 +500,16 @@
                     <h4>{{ $material->title }}</h4>
                     
                     @if($material->type === 'pdf')
-                        @php
-                            $pdfPath = public_path('storage/' . ltrim($material->file_path, '/'));
-                        @endphp
-                        @if($material->file_path && file_exists($pdfPath))
-                            <iframe src="{{ asset('storage/' . ltrim($material->file_path, '/')) }}"
+                        @if($material->file_path && file_exists($filePath))
+                            <iframe src="{{ $fileUrl }}"
                                 width="100%" height="400"></iframe>
                         @else
                             <p style="color:red;">PDF file not found.</p>
                         @endif
                     @elseif($material->type === 'video_file')
-                        @php
-                            $videoPath = public_path('storage/' . ltrim($material->file_path, '/'));
-                        @endphp
-                        @if($material->file_path && file_exists($videoPath))
+                        @if($material->file_path && file_exists($filePath))
                             <video controls width="100%" style="max-height:500px;">
-                                <source src="{{ asset('storage/' . ltrim($material->file_path, '/')) }}" type="video/mp4">
+                                <source src="{{ $fileUrl }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         @else
