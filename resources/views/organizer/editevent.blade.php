@@ -1082,7 +1082,6 @@
                                                 Your browser does not support the video tag.
                                             </video>
                                         @elseif($material->type == 'video_link')
-                                            <!-- kosong saja, preview nanti di-handle JS -->
                                         @endif
                                     </div>
 
