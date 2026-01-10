@@ -242,12 +242,6 @@
             <section class="auth-right">
                 <h3>Sign Up</h3>
 
-                @if ($errors->any())
-                    <div style="color:red; font-size:14px; margin-bottom:10px;">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
-
                 <form action="{{ route('register') }}" method="POST">
                     @csrf
                     <input type="text" name="name" placeholder="Name" required>
@@ -257,6 +251,13 @@
                     <p id="js-error" style="color: red; font-size: 14px; margin-top: 5px; display: none;"></p>
                     <button type="submit" class="btn-home">Submit</button>
                 </form>
+
+                @if ($errors->any())
+                    <div style="color:red; font-size:14px; margin-bottom:10px;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+                
                 <p style="margin-top: 15px; text-align: center">
                     Already have an account?
                     <a href="/signinlan" style="color: #1f6fba; text-decoration: none; font-weight: bold;">Sign in</a>
