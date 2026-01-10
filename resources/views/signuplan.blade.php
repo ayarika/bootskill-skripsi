@@ -244,10 +244,10 @@
 
                 @if ($errors->any())
                     <div style="color:red; font-size:14px; margin-bottom:10px;">
-                        {{ $error->first() }}
+                        {{ $errors->first() }}
                     </div>
                 @endif
-                
+
                 <form action="{{ route('register') }}" method="POST">
                     @csrf
                     <input type="text" name="name" placeholder="Name" required>
