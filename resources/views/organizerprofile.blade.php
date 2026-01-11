@@ -339,7 +339,7 @@
                         @forelse($organizer->events as $event)
                             <div class="bootcamp-card clickable-card"
                                 data-url="{{ route('bootcamp.detail', $event->id) }}"
-                                data-start-date="{{ \Carbon\Carbon::parse($event->start_date)->toIso8601String() }}">
+                                data-start-date="{{ $event->start_date }}">
                                 
                                 <div class="bootcamp-card-banner">
                                     <img src="{{ $event->image_path && file_exists(public_path($event->image_path))
