@@ -338,7 +338,7 @@
                 <div class="bootcamp-grid">
                         @forelse($organizer->events as $event)
                             <div class="bootcamp-card clickable-card"
-                                onclick="window.location='{{ route('bootcamp.detail', $event->id) }}'"
+                                data-url="{{ route('bootcamp.detail', $event->id) }}"
                                 data-start-date="{{ \Carbon\Carbon::parse($event->start_date)->toIso8601String() }}">
                                 
                                 <div class="bootcamp-card-banner">
@@ -423,7 +423,14 @@
                     badge.classList.add("ended");
                 } 
             });
-        })
+
+            document.querySelectorAll(".clickable-card").forEach(card => {
+                card.addEventListener("click", function(e) {
+                    if (e.target.closest(".view-details-btn")) return;
+                    window.location = this.dataset.url;
+                });
+            });
+        });
     </script>
 </body>
 </html>
