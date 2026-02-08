@@ -402,7 +402,8 @@
                 const startDateStr = card.dataset.startDate;
                 if (!startDateStr) return;
 
-                const startDate = new Date(startDateStr);
+                const [year, month, day] = startDateStr.split("-");
+                const startDate = new Date(year, month - 1, day);
                 startDate.setHours(0,0,0,0);
 
                 const diffDays = Math.ceil((startDate - today)/(1000 * 60 * 60 * 24));
